@@ -1,0 +1,8 @@
+{
+  "type": "animation",
+  "file": "animations/water.png",
+  "blocking": true,
+  "refresh_rate": 200,
+  "nbr_frames": 8,
+  "repeat": true
+}

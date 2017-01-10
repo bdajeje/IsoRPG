@@ -1,0 +1,36 @@
+# Conversation file syntax
+
+Conversation elements are delimited by '|'.
+A conversation file is formated as:
+
+-------------------------------------------------------
+text of png to show|png head sprite filepath
+number of answers
+answer 1 text|answer action
+answer 2 text|answer action
+...
+-------------------------------------------------------
+
+Example:
+------------------------------------------------------
+Welcome dear young adventurer !|happy.png
+2
+Hey mister :)|c:1
+You are weird, bye!|a:quit
+What's your name?|asking.png
+1
+My name is Nani|a:quit
+-------------------------------------------------------
+
+In the previous example the conversation will show the text "Welcome dear young adventurer !" and the PNG head sprite will be "happy.png".
+There are two asnwers to this step. 
+First answer is "Hey mister :)" and lead to conversation step 1 (the "c:1" part, 'c' stands for continue).
+Second answer is "You are weird, bye!" and exit the conversation ('a' for action then the quit action)
+If selecting first answer then dialog continues to step 1 and displays: "What's your name?" with a new PNJ head sprite "asking.png".
+There is only one answer to this step "My name is Nani" and this answer exists the dialog.
+
+# todo 
+
+## scripts
+
+## save conversation states

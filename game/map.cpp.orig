@@ -1,0 +1,84 @@
+#include "map.hpp"
+
+<<<<<<< HEAD
+#include <boost/lexical_cast.hpp>
+
+#include "utils/exception.hpp"
+#include "utils/file.hpp"
+#include "graphics/animations/sprite.hpp"
+#include "managers/texture_manager.hpp"
+=======
+#include "graphics/animation.hpp"
+>>>>>>> animation-creator
+
+namespace game {
+
+Map::Map(std::string name)
+  : _name{std::move(name)}
+{
+
+}
+
+void Map::update(const sf::Time& elapsed_time)
+{
+  InteractibleScreen::update(elapsed_time);
+}
+
+void Map::internalDraw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+  for(const auto& sprite : _sprite_layouts)
+    target.draw(*sprite.get(), states);
+}
+
+events::EventAction Map::handleEvents(const sf::Event& /*event*/)
+{
+  return events::EventAction::Continue;
+}
+
+SpriteSP Map::addSpriteToLayouts(SpriteSP sprite)
+{  
+  _sprite_layouts.emplace_back(sprite);
+  return sprite;
+}
+
+void Map::addAnimatedSpriteToLayouts(const std::string& input)
+{
+<<<<<<< HEAD
+  constexpr size_t nbr_parts {4};
+  const std::vector<std::string> parts = utils::files::lines("./resources/animations/" + input, nbr_parts);
+
+  if(parts.size() < nbr_parts)
+    throw utils::Exception("Can't create animated sprite, wrong input, from: " + input);
+
+  // Create associated animation
+  size_t nbr_elements;
+  uint refresh_rate;
+  bool repeat;
+
+  try
+  {
+    nbr_elements = boost::lexical_cast<size_t>(parts[1]);
+    refresh_rate =  boost::lexical_cast<unsigned int>(parts[2]);
+    repeat = boost::lexical_cast<bool>(parts[3]);
+  }
+  catch(...)
+  {
+    throw utils::Exception("Can't create animated sprite, wrong parts, from: " + input);
+  }
+
+  // Create sprite
+  SpriteSP sprite = addSpriteToLayouts(parts[0], nbr_elements, 1);
+
+  // Create related animation
+  std::shared_ptr<graphics::animations::Sprite> animation = std::make_shared<graphics::animations::Sprite>(
+    sprite, nbr_elements, refresh_rate, repeat
+  );
+  _animations.push_back(animation);
+=======
+  auto sprite_animation = graphics::createAnimation(input, 1, 1);
+  addSpriteToLayouts(sprite_animation.first);
+  addAnimation(sprite_animation.second);
+>>>>>>> animation-creator
+}
+
+}

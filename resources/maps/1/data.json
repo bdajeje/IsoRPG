@@ -1,0 +1,400 @@
+{
+  "name": "First map test ever",
+  "music": "Final_Fantasy_VI_-_Terra_39_s_Theme_-_Tina_39_s_Th.ogv",
+  "starting_map_pos": [12, 20],
+  "combats": {
+    "probability": 90,
+    "combat_groups": [
+        {
+          "music": "combat_1.ogv",
+          "ennemies": [
+            {
+              "name": "Nani",
+              "ally": false,
+              "life": {"current": 100, "max": 100},
+              "mana": {"current": 50, "max": 50},
+              "energy": {"current": 100, "max": 100},
+              "level": 1,
+              "speed": 4,
+              "traits": ["", ""],
+              "sprites": {
+                  "face": "characters/faces/ennemy_1.png",
+                  "movements": {
+                    "top_left": {
+                      "file": "animations/pnjs/ennemy_2_move_top_left.png",
+                      "refresh_rate": 150,
+                      "nbr_frames": 13,
+                      "repeat": false
+                    },
+                    "top_right": {
+                      "file": "animations/pnjs/ennemy_2_move_top_right.png",
+                      "refresh_rate": 150,
+                      "nbr_frames": 13,
+                      "repeat": false
+                    },
+                    "bottom_left": {
+                      "file": "animations/pnjs/ennemy_2_move_bottom_left.png",
+                      "refresh_rate": 150,
+                      "nbr_frames": 13,
+                      "repeat": false
+                    },
+                    "bottom_right": {
+                      "file": "animations/pnjs/ennemy_2_move_bottom_right.png",
+                      "refresh_rate": 150,
+                      "nbr_frames": 13,
+                      "repeat": false
+                    }
+                  }
+              },
+              "inventory": {
+                  "max_height": 4,
+                  "max_width": 8,
+                  "items": []
+              },
+              "pos": [18, 13]
+            },
+            {
+              "name": "Nana",
+              "ally": false,
+              "life": {"current": 200, "max": 200},
+              "mana": {"current": 0, "max": 0},
+              "energy": {"current": 150, "max": 150},
+              "level": 2,
+              "speed": 2,
+              "traits": ["", ""],
+              "sprites": {
+                  "face": "characters/faces/ennemy_2.png",
+                  "movements": {
+                    "top_left": {
+                      "file": "animations/pnjs/ennemy_2_move_top_left.png",
+                      "refresh_rate": 150,
+                      "nbr_frames": 13,
+                      "repeat": false
+                    },
+                    "top_right": {
+                      "file": "animations/pnjs/ennemy_2_move_top_right.png",
+                      "refresh_rate": 150,
+                      "nbr_frames": 13,
+                      "repeat": false
+                    },
+                    "bottom_left": {
+                      "file": "animations/pnjs/ennemy_2_move_bottom_left.png",
+                      "refresh_rate": 150,
+                      "nbr_frames": 13,
+                      "repeat": false
+                    },
+                    "bottom_right": {
+                      "file": "animations/pnjs/ennemy_2_move_bottom_right.png",
+                      "refresh_rate": 150,
+                      "nbr_frames": 13,
+                      "repeat": false
+                    }
+                  }
+              },
+              "inventory": {
+                  "max_height": 4,
+                  "max_width": 8,
+                  "items": []
+              },
+              "pos": [16, 12]
+            }
+          ]
+        }
+    ]
+  },
+  "layouts": [
+    {
+      "type": "sprite",
+      "file": "map_1_background.png"
+    },
+    {
+        "type": "characters"
+    },
+    {
+      "type": "sprite",
+      "file": "map_2_background.png"
+    }
+  ],
+  "tiles": [
+    ["","","","","","","","","","","","","","","","4.json","4.json"],
+    ["","","","","","","","","","","","","","","4.json","4.json","4.json","4.json"],
+    ["","","","","","","","","","","","","","4.json","4.json","4.json","4.json","4.json","4.json"],
+    ["","","","","","","","","","","","","4.json","4.json","4.json","4.json","4.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","","","","","","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","","","","","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","","","","3.json","3.json","3.json","3.json","1.json","2.json","1.json","1.json","1.json","1.json","2.json","1.json","1.json","1.json","1.json","2.json"],
+    ["","","","","","","","","3.json","3.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","1.json","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","2.json","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","2.json","1.json","1.json","1.json","1.json","2.json","1.json","1.json","1.json","1.json","2.json","1.json","1.json","1.json","1.json"],
+    ["","","","1.json","1.json","1.json","3.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","1.json","1.json","1.json","3.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","1.json","1.json","1.json","1.json","3.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["1.json","1.json","1.json","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["1.json","1.json","1.json","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["1.json","1.json","1.json","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","1.json","1.json","1.json","2.json","1.json","3.json","3.json","3.json","2.json","1.json","1.json","1.json","1.json","2.json","1.json","1.json","1.json","1.json","2.json","1.json","1.json","1.json","1.json","2.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","1.json","1.json","1.json","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","1.json","1.json","1.json","1.json","1.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","1.json","1.json","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json"],
+    ["","","","","","","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json"],
+    ["","","","","","","","1.json","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","","","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","","","","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","","","","","1.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","","","","","","1.json","3.json","3.json","2.json","1.json","1.json","1.json","1.json","2.json","1.json"],
+    ["","","","","","","","","","","","","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","","","","","","","","3.json","3.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","","","","","","","","","3.json","1.json","1.json","1.json"],
+    ["","","","","","","","","","","","","","","","1.json","1.json"]
+  ],
+  "interactibles": [
+    {
+      "pos": [5,20],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [4,20],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [3,20],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [2,20],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [5,19],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [4,19],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [3,19],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [2,19],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [5,18],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [4,18],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [3,18],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [2,18],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [1,17],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [2,17],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [3,17],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [4,17],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [1,16],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [2,16],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [3,16],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [4,16],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [1,15],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [2,15],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [3,15],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [4,15],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [2,14],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [3,14],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [4,14],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [3,13],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [4,13],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [15,15],
+      "type": "sprite",
+      "file": "tree.png", "width": 70, "height": 116, "combat_hidden": false,
+      "blocking": true
+    },
+    {
+      "pos": [13,13],
+      "file": "pnjs/1.png",
+      "width": 70,
+      "height": 116,
+      "blocking": true,
+      "combat_hidden": true,
+      "interactions": [
+        {
+          "type": "conversation",
+          "name": "1"
+        }
+      ]
+    },
+    {
+      "pos": [11,18],
+      "file": "treasures/1.png",
+      "width": 50,
+      "height": 60,
+      "blocking": true,
+      "combat_hidden": false,
+      "interactions": [
+        {
+          "type": "treasure",
+          "inventory": {
+            "max_height": 4,
+            "max_width": 4,
+            "items": [
+              {
+                "type": "weapon",
+                "pos": [0,0],
+                "size": [2,2],
+                "sprites": {
+                  "inventory": "gears/weapons/1.png"
+                },
+                "stats": {
+                  "strengh": 22
+                }
+              }
+            ]
+          },
+          "open_animation": {
+            "file": "animations/treasures/0.png",
+            "refresh_rate": 150,
+            "nbr_frames": 5,
+            "repeat": false,
+            "sound": "treasures/open.wav"
+          }
+        }
+      ]
+    },
+    {
+      "pos": [6,21],
+      "file": "change_map.png",
+      "width": 25,
+      "height": 65,
+      "combat_hidden": false,
+      "blocking": false,
+      "interactions": [
+        {
+          "type": "change_map",
+          "to_map": "2"
+        }
+      ]
+    }
+  ]
+}

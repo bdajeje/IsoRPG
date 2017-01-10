@@ -1,0 +1,59 @@
+#include "animated_sprite.hpp"
+
+namespace graphics {
+namespace animations {
+
+AnimatedSprite::AnimatedSprite(SpriteSP& sprite, size_t nbr_elements, uint refresh_rate_ms, bool repeat)
+  : Animation{sprite}
+  , _height {sprite->getTexture()->getSize().y}
+  , _refresh_rate_ms{refresh_rate_ms}
+<<<<<<< HEAD:graphics/animations/sprite.cpp
+=======
+  , _height {sprite->getTexture()->getSize().y}
+>>>>>>> animation-creator:graphics/animations/animated_sprite.cpp
+  , _repeat {repeat}
+{
+  if(nbr_elements == 0)
+    nbr_elements = 1;
+
+  _width = _sprite->getTexture()->getSize().x / nbr_elements;
+  _total_width = nbr_elements * _width;
+}
+
+void AnimatedSprite::update(const sf::Time& elapsed_time)
+{
+  if(isFinished())
+    return;
+
+  // Do we need a sprite update
+  bool need_update = false;
+  if( elapsed_time.asMilliseconds() - _elapsed_time >= _refresh_rate_ms )
+    need_update = true;
+
+  _elapsed_time += elapsed_time.asMilliseconds();
+
+  if(need_update)
+    updateSprite();
+}
+
+void AnimatedSprite::updateSprite()
+{
+  const unsigned int texture_nbr = _elapsed_time / _refresh_rate_ms;
+  uint x_offset = (texture_nbr * _width) + (1 * texture_nbr);
+
+  if(x_offset >= _total_width)
+  {
+    if(_repeat)
+    {
+      _elapsed_time = 0;
+      x_offset = 0;
+    }
+    else
+      _finished = true;
+  }
+
+  _sprite->setTextureRect(sf::IntRect(x_offset, 0, _width, _height));
+}
+
+}
+}

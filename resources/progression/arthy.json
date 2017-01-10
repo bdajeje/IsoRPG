@@ -1,0 +1,70 @@
+{
+  "name": "Arthy",
+  "ally": true,
+  "level": 3,
+  "speed": 2,
+  "traits": ["Mage", "Priest"],
+  "sprites": {
+    "face": "characters/faces/face_3.png",
+    "standing": "standing_3.png",
+    "movements": {
+      "top_left": {
+        "file": "animations/pnjs/ennemy_1_move_top_left.png",
+        "refresh_rate": 150,
+        "nbr_frames": 13,
+        "repeat": false
+      },
+      "top_right": {
+        "file": "animations/pnjs/ennemy_1_move_top_right.png",
+        "refresh_rate": 150,
+        "nbr_frames": 13,
+        "repeat": false
+      },
+      "bottom_left": {
+        "file": "animations/pnjs/ennemy_1_move_bottom_left.png",
+        "refresh_rate": 150,
+        "nbr_frames": 13,
+        "repeat": false
+      },
+      "bottom_right": {
+        "file": "animations/pnjs/ennemy_1_move_bottom_right.png",
+        "refresh_rate": 150,
+        "nbr_frames": 13,
+        "repeat": false
+      }
+    }
+  },
+  "life": {"current": 90, "max": 100},
+  "mana": {"current": 70, "max": 230},
+  "energy": {"current": 100, "max": 100},
+  "exp": {"current": 100, "max": 100},
+  "start_movement_range": 1,
+  "inventory": {
+    "max_height": 4,
+    "max_width": 8,
+    "items": [
+      {
+        "type": "weapon",
+        "pos": [0,0],
+        "size": [2,2],
+        "sprites": {
+          "inventory": "gears/weapons/1.png"
+        },
+        "stats": {
+          "strengh": 20
+        }
+      },
+      {
+        "type": "weapon",
+        "pos": [2,0],
+        "size": [2,2],
+        "sprites": {
+          "inventory": "gears/weapons/1.png"
+        },
+        "stats": {
+          "strengh": 20
+        }
+      }
+    ]
+  }
+}

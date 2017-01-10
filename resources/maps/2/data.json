@@ -1,0 +1,68 @@
+{
+  "name": "First map test ever",
+  "music": "Final_Fantasy_VI_-_Terra_39_s_Theme_-_Tina_39_s_Th.ogv",
+  "starting_map_pos": [25, 22],
+  "layouts": [
+    {
+      "type": "sprite",
+      "file": "map_1_background.png"
+    },
+    {
+        "type": "characters"
+    },
+    {
+      "type": "sprite",
+      "file": "map_2_background.png"
+    }
+  ],
+  "tiles": [
+    ["","","","","","","","","","","","","","","","4.json","4.json"],
+    ["","","","","","","","","","","","","","","4.json","4.json","4.json","4.json"],
+    ["","","","","","","","","","","","","","4.json","4.json","4.json","4.json","4.json","4.json"],
+    ["","","","","","","","","","","","","4.json","4.json","4.json","4.json","4.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","","","","","","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","","","","","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","","","","3.json","3.json","3.json","3.json","1.json","2.json","1.json","1.json","1.json","1.json","2.json","1.json","1.json","1.json","1.json","2.json"],
+    ["","","","","","","","","3.json","3.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","1.json","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","2.json","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","2.json","1.json","1.json","1.json","1.json","2.json","1.json","1.json","1.json","1.json","2.json","1.json","1.json","1.json","1.json"],
+    ["","","","1.json","1.json","1.json","3.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","1.json","1.json","1.json","3.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","1.json","1.json","1.json","1.json","3.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["1.json","1.json","1.json","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["1.json","1.json","1.json","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["1.json","1.json","1.json","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","1.json","1.json","1.json","2.json","1.json","3.json","3.json","3.json","2.json","1.json","1.json","1.json","1.json","2.json","1.json","1.json","1.json","1.json","2.json","1.json","1.json","1.json","1.json","2.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","1.json","1.json","1.json","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","1.json","1.json","1.json","1.json","1.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","1.json","1.json","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json"],
+    ["","","","","","","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json","7.json"],
+    ["","","","","","","","1.json","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","","","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","","","","1.json","1.json","3.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","","","","","1.json","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","","","","","","1.json","3.json","3.json","2.json","1.json","1.json","1.json","1.json","2.json","1.json"],
+    ["","","","","","","","","","","","","3.json","3.json","1.json","1.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","","","","","","","","3.json","3.json","1.json","1.json","1.json","1.json"],
+    ["","","","","","","","","","","","","","","3.json","1.json","1.json","1.json"],
+    ["","","","","","","","","","","","","","","","1.json","1.json"]
+  ],
+  "interactibles": [
+    {
+      "pos": [22,21],
+      "file": "change_map.png",
+      "width": 25,
+      "height": 65,
+      "blocking": false,
+      "interactions": [
+        {
+          "type": "change_map",
+          "to_map": "1"
+        }
+      ]
+    }
+  ]
+}
