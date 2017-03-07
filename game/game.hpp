@@ -16,14 +16,16 @@ namespace game {
 
 class Game
 {
-  public:    
+  public:
 
     static std::shared_ptr<Game> init();
     static void show(InteractibleScreenSP screen);
+    static void pop();
     static void waitForAnimation(const graphics::AnimationSP& animation, std::function<void()> handler);
     static void changeMap(const std::string& map_id);
     static void save(std::string directory);
     static void hideMapUI();
+    static void loadGame(const std::string& filepath);
 
     void start();
 

@@ -6,9 +6,9 @@ namespace graphics {
 namespace animations {
 
 AnimatedSprite::AnimatedSprite(std::shared_ptr<Sprite>& sprite, const json& data)
-  : SpriteAnimation{sprite}
-  , _refresh_rate_ms{data["refresh_rate"]}
+  : SpriteAnimation {sprite}
   , _nbr_elements {data["nbr_frames"]}
+  , _refresh_rate_ms {data["refresh_rate"]}
   , _repeat {data["repeat"]}
 {
   _texture_file = data["file"];
@@ -27,8 +27,8 @@ void AnimatedSprite::restart()
   const sf::Texture& texture = texture::TextureManager::get(_texture_file);
 
   // Set first sprite before even updating
-  _sprite->setTexture(texture, false);
-  const auto bounds = _sprite->getGlobalBounds();
+  _sprite->setTexture(texture, true);
+  const auto bounds = _sprite->getLocalBounds();
   _total_width = bounds.width;
 
   _sprite->setTextureRect(sf::IntRect(0, 0, bounds.width / _nbr_elements, bounds.height));
@@ -53,7 +53,7 @@ void AnimatedSprite::update(const sf::Time& elapsed_time)
 void AnimatedSprite::updateSprite()
 {
   const unsigned int step_nbr = ceil(_elapsed_time / _refresh_rate_ms);
-  const auto bounds = _sprite->getGlobalBounds();
+  const auto bounds = _sprite->getLocalBounds();
   uint x_offset = step_nbr * bounds.width + (1 * step_nbr);
 
   if(x_offset >= _total_width)

@@ -1,0 +1,46 @@
+{
+  "conversation": {
+    "texts": [
+      {
+        "text": "Il etait une fois un petit nani qui fut gronde par un nana. La nana n'etait pas content car il etait rouge. Or le nani, lui, etait blueu. Et tout le monde sait bien que la plus belle des couleurs, c'est le bleu! ahahahah. BNon treve de plaisanterie, voici la question: Nani et Nana sont dans un bateau, Nani tombe a l'eau ... Il etait une fois un petit nani qui fut gronde par un nana. La nana n'etait pas content car il etait rouge. Or le nani, lui, etait blueu. Et tout le monde sait bien que la plus belle des couleurs, c'est le bleu! ahahahah. BNon treve de plaisanterie, voici la question: Nani et Nana sont dans un bateau, Nani tombe a l'eau ...",
+        "head_sprite": "conversations/normal.png",
+        "answers": [
+          {
+            "text": "C'est une sorte de devinette?",
+            "action": {
+              "type": "goto",
+              "value": "0"
+            }
+          },
+          {
+            "text": "...Nana est content?",
+            "action": {
+              "type": "goto",
+              "value": "1"
+            }
+          },
+          {
+            "text": "(il me fait chier lui)",
+            "action": {
+              "type": "quit",
+              "value": "0"
+            }
+          }
+        ]
+      },
+      {
+        "text": "Je vois que vous connaissez le mot de passe. Entrez mon ami.",
+        "head_sprite": "conversations/happy.png",
+        "answers": [
+          {
+            "text": "Merci",
+            "action": {
+              "type" :"script",
+              "value": "open_door"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

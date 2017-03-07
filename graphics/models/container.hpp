@@ -4,42 +4,50 @@
 #include <SFML/Graphics.hpp>
 
 #include "graphics/sprite.hpp"
+#include "graphics/drawable.hpp"
+#include "graphics/models/rectangle.hpp"
+#include "graphics/sprite.hpp"
 
 namespace graphics {
-namespace model {
 
-enum Sprites {
-  TopLeft,
-  Top,
-  TopRight,
-  Left,
-  Right,
-  BottomLeft,
-  Bottom,
-  BottomRight
+struct ContainerProps {
+    sf::Color bg_color = sf::Color::Black;
 };
 
-class Container : public sf::Drawable
+class Container : public Drawable
 {
   public:
 
-    Container(sf::Vector2f size_percentage, sf::Vector2f position);
+    Container(int width, int height, const sf::Vector2f& pos, ContainerProps props = {});
 
-    void setPosition(const sf::Vector2f& position) noexcept;
+    virtual sf::FloatRect getGlobalBounds() const { return _background->getGlobalBounds(); }
+    virtual void setColor(const sf::Color& color) { _background->setColor(color); }
+    virtual const sf::Color getColor() const { return _background->getColor(); }
+
+    virtual void setPosition(float x, float y) override;
+    virtual void move(float offsetX, float y) override;
+
+    void addDrawable(DrawableSP drawable, const sf::Vector2f& pos);
+//    void setBackground();
+
+    virtual void clicked(int x, int y) override;
 
   protected:
 
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    virtual void internalDraw(sf::RenderTarget& target, sf::RenderStates states) const noexcept;
+    void moveElements(float offsetX, float y);
 
   protected:
 
-    // \todo get array size by template?
-    std::array<SpriteSP, 8> _sprites;
+    std::vector<DrawableSP> _drawables;
+//    DrawableSP _background;
+    RectangleSP _background;
+    int _width;
+    int _height;
 };
 
 using ContainerSP = std::shared_ptr<Container>;
 
-}
 }
 
 #endif // CONTAINER_HPP

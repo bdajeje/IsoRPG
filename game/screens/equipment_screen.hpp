@@ -28,7 +28,6 @@ class EquipmentScreen final : public InteractibleScreen
 
   private:
 
-    utils::KeyLimitor _limitor;
     graphics::TextSP _name_text;
     graphics::TextSP _level_text;
     graphics::TextSP _life_text;

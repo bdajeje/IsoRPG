@@ -10,16 +10,31 @@ namespace {
   constexpr float FACE_HEIGHT = 40;
 }
 
-CombatTimeLine::CombatTimeLine(const sf::Vector2f& pos, const std::list<game::CharacterSP>& characters)
+CombatTimeLine::CombatTimeLine(const sf::Vector2f& pos, const game::CombatModelSP& model)
   : _pos {pos}
+  , _model {model}
 {
-  setCharacters(characters);
+  _background = getSprite("combats/timeline_background.png", 300, 100);
+  _transformable = _background->transformable();
+
+  setCharacters();
+
+  model->registerEvent(game::CombatModel::Event::CharacterTurn, [&](){
+    _pointers.clear();
+    _pointers.push_back(getSprite("combats/timeline_pointer.png", 15, 15));
+    setPointerPos(0);
+  });
 }
 
 void CombatTimeLine::internalDraw(sf::RenderTarget& target, sf::RenderStates states) const noexcept
 {
+  _background->draw(target, states);
+
   for(const auto& face : _faces)
     face._sprite->draw(target, states);
+
+  for(const auto& pointer : _pointers)
+    pointer->draw(target, states);
 }
 
 void CombatTimeLine::update(const sf::Time& time)
@@ -28,24 +43,18 @@ void CombatTimeLine::update(const sf::Time& time)
     face._sprite->update(time);
 }
 
-void CombatTimeLine::setCharacters(const std::list<game::CharacterSP>& characters)
+void CombatTimeLine::setCharacters()
 {
-  // Order characters
-  _characters = characters;
-  _characters.sort([](const game::CharacterSP& character_1, const game::CharacterSP& character_2) {
-    return character_1->speed() < character_2->speed();
-  });
-
   // Create faces
   _faces.clear();
-  for(const auto& character : _characters)
+  for(const auto& character : _model->characters())
   {
     SpriteSP face = getSprite(character->faceTextureName(), FACE_WIDTH, FACE_HEIGHT);
     face->hide();
     _faces.emplace_back(face, character);
   }
 
-  setPosition(_pos);
+  setPosition(_pos.x, _pos.y);
 
   // Create animation
   int delay = 150;
@@ -54,13 +63,13 @@ void CombatTimeLine::setCharacters(const std::list<game::CharacterSP>& character
   for(auto& face : _faces)
   {
     SpriteSP& sprite = face._sprite;
-    sprite->move(0, face_y_offset);
+    sprite->move(0, -face_y_offset);
 
-    auto fade_in_animation = std::make_shared<animations::FadingAnimation>(sprite, sf::milliseconds(animation_time * 2));
+    auto fade_in_animation = std::make_shared<animations::FadingAnimation>(sprite, sf::milliseconds(animation_time * 2), animations::FadingAnimation::Type::In);
     auto delay_animation_1 = std::make_shared<animations::Delay>(fade_in_animation, sf::milliseconds(delay));
     sprite->addAnimation(delay_animation_1);
 
-    auto move_animation = std::make_shared<animations::Move>(sprite, 0, -face_y_offset, sf::milliseconds(animation_time));
+    auto move_animation = std::make_shared<animations::Move>(sprite, 0, face_y_offset, sf::milliseconds(animation_time));
     auto delay_animation_2 = std::make_shared<animations::Delay>(move_animation, sf::milliseconds(delay));
     sprite->addAnimation(delay_animation_2);
 
@@ -70,6 +79,11 @@ void CombatTimeLine::setCharacters(const std::list<game::CharacterSP>& character
 
 void CombatTimeLine::setPosition(float x, float y)
 {
+  _background->setPosition(x, y);
+
+  x += 25;
+  y += 10;
+
   for(auto& face : _faces)
   {
     float y_offset = face._character->isAlly() ? 0 : 20;
@@ -78,6 +92,22 @@ void CombatTimeLine::setPosition(float x, float y)
     sprite->setPosition(x, y + y_offset);
     x += sprite->getGlobalBounds().width + 10;
   }
+
+  for(size_t i = 0, end = _pointers.size(); i < end; ++i)
+    setPointerPos(i);
+}
+
+void CombatTimeLine::setPointerPos(size_t index)
+{
+  if(index >= _faces.size() || index >= _pointers.size())
+    return;
+
+  auto face = (*std::next(_faces.begin(), index));
+  const auto& face_pos = face._sprite->getPosition();
+  const auto& face_bound = face._sprite->getGlobalBounds();
+
+  auto& pointer = _pointers[index];
+  pointer->setPosition(face_pos.x + (face_bound.width - pointer->getGlobalBounds().width) / 2, face_pos.y + face_bound.height + 5);
 }
 
 sf::FloatRect CombatTimeLine::getGlobalBounds() const

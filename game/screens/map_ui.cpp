@@ -11,29 +11,33 @@
 namespace game {
 namespace screen {
 
+static constexpr float ICON_WIDTH = 45;
+static constexpr float ICON_HEIGHT = 45;
+static constexpr float NAME_BG_WIDTH = 400;
+static constexpr float NAME_BG_HEIGHT = 40;
+
 MapUI::MapUI(const std::string& id, const json& data)
   : _id {id}
-  , _limitor {50}
 {
   // Map name add background
-  auto name_background = graphics::getSprite("top_text_box.png", 0.35, 0.05);
+  auto name_background = graphics::getSprite("top_text_box.png", NAME_BG_WIDTH, NAME_BG_HEIGHT);
   name_background->setPosition((mgr::Window::width() - name_background->getGlobalBounds().width) / 2, 0);
   addDrawable(name_background);
-  _map_name = graphics::getText("conversation.ttf", data["name"], 16, sf::Color(100, 100, 100));
+  _map_name = graphics::getText("conversation.ttf", data["name"], 18, sf::Color(150, 150, 150));
   _map_name->setPosition((mgr::Window::width() - _map_name->getGlobalBounds().width) / 2, 5);
   addDrawable(_map_name);
 
   // Upper left icons
-  auto equipment_icon = graphics::getSprite("equipment_icon.png", 0.03, 0.03);
-  auto team_icon = graphics::getSprite("team_icon.png", 0.03, 0.03);
-  auto skills_icon = graphics::getSprite("skills_icon.png", 0.03, 0.03);
+  auto equipment_icon = graphics::getSprite("equipment_icon.png", ICON_WIDTH, ICON_HEIGHT);
+  auto team_icon = graphics::getSprite("team_icon.png", ICON_WIDTH, ICON_HEIGHT);
+  auto skills_icon = graphics::getSprite("skills_icon.png", ICON_WIDTH, ICON_HEIGHT);
   std::vector<graphics::SpriteSP> icon_paths = {equipment_icon, team_icon, skills_icon};
   float x {0};
   for(graphics::SpriteSP& icon : icon_paths)
   {
-    icon->setPosition(x, 0);
-    x += icon->getGlobalBounds().width;
-    addDrawable(icon);
+	icon->setPosition(x, 0);
+	x += icon->getGlobalBounds().width;
+	addDrawable(icon);
   }
 
   _equipment_page = std::make_shared<EquipmentScreen>();
@@ -79,21 +83,27 @@ void MapUI::showSkills() const noexcept
 events::EventAction MapUI::handleEvents(const sf::Event& event)
 {
   if(InteractibleScreen::handleEvents(event) == events::EventAction::Stop)
-    return events::EventAction::Stop;
+	return events::EventAction::Stop;
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wswitch"
   switch(event.type)
   {
-    case sf::Event::KeyPressed:
-    {
-      if(isKeyAllowed(sf::Keyboard::Escape, _limitor))
-        Game::show(std::make_shared<screen::GameMenu>());
-      else if(isKeyAllowed(sf::Keyboard::I, _limitor))
-        showEquipment();
+	case sf::Event::KeyPressed:
+	{
+	  if(isKeyAllowed(utils::KeyBinding::key(KeyAction::ShowGameMenu)))
+	  {
+		Game::show(std::make_shared<screen::GameMenu>());
+		return events::EventAction::Stop;
+	  }
+	  else if(isKeyAllowed(utils::KeyBinding::key(KeyAction::MapOpenInventory)))
+	  {
+		showEquipment();
+		return events::EventAction::Stop;
+	  }
 
-      break;
-    }
+	  break;
+	}
   }
 #pragma GCC diagnostic pop
 

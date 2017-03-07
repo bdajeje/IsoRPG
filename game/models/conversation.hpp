@@ -5,6 +5,8 @@
 #include <memory>
 #include <vector>
 
+#include "utils/json.hpp"
+
 namespace game {
 namespace model {
 
@@ -15,26 +17,36 @@ enum class AnswerActionType
   GotoConversationStep
 };
 
-struct ConversationAnswer
-{
-    ConversationAnswer(std::string text)
-      : text {text}
-    {}
-
-    std::string text;
-};
-
 struct AnswerAction
 {
+    AnswerAction(const std::string& type_str, const std::string& data)
+      : data {data}
+    {
+      if(type_str == "goto")
+        type = AnswerActionType::GotoConversationStep;
+      else if(type_str == "script")
+        type = AnswerActionType::RunScript;
+      else if(type_str == "quit")
+        type = AnswerActionType::QuitConversation;
+      else
+        type = AnswerActionType::QuitConversation;
+    }
+
+    AnswerAction()
+      : AnswerAction{"quit", ""}
+    {}
+
     AnswerActionType type {AnswerActionType::QuitConversation};
     std::string data;
 };
 
 struct ConversationStep
 {
+  ConversationStep(const json& data);
+
   std::string text;
   std::string sprite_path;
-  std::vector<ConversationAnswer> answers;
+  std::vector<std::string> answers;
   std::vector<AnswerAction> answers_action;
 };
 
@@ -44,7 +56,7 @@ class Conversation final
 {
   public:
 
-    Conversation(const std::string& conversation_filepath);
+    Conversation(const json& data);
 
     const std::string& text() const noexcept { return _current->text; }
     const std::string& spritePath() const noexcept { return _current->sprite_path; }

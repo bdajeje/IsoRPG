@@ -28,7 +28,7 @@ class TextureManager final
     static TextureManager& instance() { return *_instance; }
 
     static const sf::Texture& get(const std::string& texture_file_path);
-    static const sf::Texture& get(const std::string& texture_file_path, const sf::IntRect& rect);
+//    static const sf::Texture& get(const std::string& texture_file_path, const sf::IntRect& rect);
 
   private:
 

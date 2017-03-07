@@ -4,12 +4,23 @@
 #include <memory>
 #include <SFML/Graphics/Text.hpp>
 #include "graphics/drawable.hpp"
-#include "game/transformable.hpp"
 
 namespace graphics {
 
+struct TextProperties
+{
+  TextProperties(sf::Color color, std::string font, int size)
+    : color {color}
+    , font {font}
+    , size {size}
+  {}
+
+  sf::Color color;
+  std::string font;
+  int size;
+};
+
 class Text final : public Drawable
-                 , public game::Transformable
 {
   public:
 
@@ -17,7 +28,9 @@ class Text final : public Drawable
 
     const sf::String& getString() const { return _text->getString(); }
     sf::FloatRect getGlobalBounds() const { return _text->getGlobalBounds(); }
+    sf::FloatRect getLocalBounds() const { return _text->getLocalBounds(); }
     virtual const sf::Color getColor() const override { return _text->getColor(); }
+    std::shared_ptr<sf::Text> text() noexcept { return _text; }
 
     void setString(const sf::String& string) { _text->setString(string); }
     virtual void setColor(const sf::Color& color) override { _text->setColor(color); }

@@ -16,13 +16,15 @@ class Transformable
 
     virtual const sf::Vector2f& getPosition() const { return _transformable->getPosition(); }
 
-    void setScale(float factorX, float factorY) { _transformable->setScale(factorX, factorY); }
+    virtual void setScale(float factorX, float factorY) { _transformable->setScale(factorX, factorY); }
     virtual void setPosition(float x, float y) { _transformable->setPosition(x, y); }
-    virtual void setPosition(const sf::Vector2f& position) { _transformable->setPosition(position); }
-    void setRotation(float angle) { _transformable->setRotation(angle); }
-    void setOrigin(float x, float y) { _transformable->setOrigin(x, y); }
+    void setPosition(const sf::Vector2f& position) { setPosition(position.x, position.y); }
+    virtual void setRotation(float angle) { _transformable->setRotation(angle); }
+    virtual void setOrigin(float x, float y) { _transformable->setOrigin(x, y); }
 
-    void move(float offsetX, float offsetY) { _transformable->move(offsetX, offsetY); }
+    virtual void move(float offsetX, float offsetY) { _transformable->move(offsetX, offsetY); }
+
+    std::shared_ptr<sf::Transformable>& transformable() { return _transformable; }
 
   protected:
 

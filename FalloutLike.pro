@@ -81,7 +81,22 @@ SOURCES += main.cpp \
     graphics/models/button.cpp \
     graphics/animations/fading_animation.cpp \
     graphics/animations/fill_bar_animation.cpp \
-    graphics/models/combat_character_panel.cpp
+    graphics/models/combat_character_panel.cpp \
+    graphics/models/combat_player_panel.cpp \
+    game/models/character_skill.cpp \
+    game/models/combats/combat_skill.cpp \
+    game/models/combats/basic_attack_skill.cpp \
+    game/models/combats/defend_skill.cpp \
+    game/models/combats/skill_area.cpp \
+    game/models/combats/cross_skill_area.cpp \
+    game/screens/combat_transition.cpp \
+    graphics/models/menu.cpp \
+    utils/keybinding.cpp \
+    game/screens/welcome_screen.cpp \
+    game/screens/settings_screen.cpp \
+    graphics/models/interactible_fill_bar.cpp \
+    graphics/models/scrollable_container.cpp \
+    game/screens/choose_saved_game_screen.cpp
 
 LIBS += -pthread \
         -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system \
@@ -172,4 +187,22 @@ HEADERS += \
     graphics/models/button.hpp \
     graphics/animations/fading_animation.hpp \
     graphics/animations/fill_bar_animation.hpp \
-    graphics/models/combat_character_panel.hpp
+    graphics/models/combat_character_panel.hpp \
+    graphics/models/combat_player_panel.hpp \
+    game/models/character_skill.hpp \
+    game/models/combats/combat_skill.hpp \
+    game/models/combats/basic_attack_skill.hpp \
+    game/models/combats/defend_skill.hpp \
+    game/models/combats/skill_area.hpp \
+    game/models/combats/cross_skill_area.hpp \
+    game/screens/combat_transition.hpp \
+    graphics/models/menu.hpp \
+    utils/keybinding.h \
+    game/screens/welcome_screen.hpp \
+    game/screens/settings_screen.hpp \
+    utils/musics.hpp \
+    graphics/models/interactible_fill_bar.hpp \
+    utils/sounds.hpp \
+    graphics/models/scrollable_container.hpp \
+    game/screens/choose_saved_game_screen.hpp \
+    utils/sprites.hpp

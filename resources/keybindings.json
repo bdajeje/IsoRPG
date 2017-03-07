@@ -1,0 +1,68 @@
+{
+  "combat_action_bar":
+  {
+    "select_skill_1": {
+      "key": "Num1"
+    },
+    "select_skill_2": {
+      "key": "Num2"
+    },
+    "select_skill_3": {
+      "key": "Num3"
+    },
+    "select_skill_4": {
+      "key": "Num4"
+    },
+    "select_skill_5": {
+      "key": "Num5"
+    }
+  },
+  "map":
+  {
+    "open_inventory": {
+      "key": "i"
+    }
+  },
+  "screen":
+  {
+    "exit": {
+      "key": "escape"
+    }
+  },
+  "general":
+  {
+    "show_game_menu": {
+      "key": "escape"
+    }
+  },
+  "conversation":
+  {
+    "focus_previous_answer": {
+      "key": "up"
+    },
+    "focus_next_answer": {
+      "key": "down"
+    },
+    "skip": {
+      "key": "space"
+    },
+    "select": {
+      "key": "return"
+    },
+    "select_1": {
+      "key": "Num1"
+    },
+    "select_2": {
+      "key": "Num2"
+    },
+    "select_3": {
+      "key": "Num3"
+    },
+    "select_4": {
+      "key": "Num4"
+    },
+    "select_5": {
+      "key": "Num5"
+    }
+  }
+}

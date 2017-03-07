@@ -28,7 +28,7 @@ TreasureScreen::TreasureScreen(TreasureInteractionSP interaction)
   // Players inventory
   const float x_pos = 800;
   float y_pos = 100;
-  for(const auto& character : CharactersTeam::characters())
+  for(const auto& character : CharactersTeam::instance()->characters())
   {
     auto character_portrait = getSprite(character->faceTextureName(), 80, 80);
     character_portrait->setPosition(x_pos, y_pos);
@@ -53,7 +53,7 @@ TreasureScreen::TreasureScreen(TreasureInteractionSP interaction)
 
 TreasureScreen::~TreasureScreen()
 {
-  for(auto& character : CharactersTeam::characters())
+  for(auto& character : CharactersTeam::instance()->characters())
     character->inventory()->setItems( _inventories[character]->items() );
 
   _interaction->setItems(_treasure_inventory->items());

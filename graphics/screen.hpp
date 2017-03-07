@@ -32,6 +32,7 @@ class Screen : public sf::Drawable,
   protected:
 
     void addDrawable(DrawableSP drawable) { _drawables.push_back(drawable); }
+    void removeDrawable(DrawableSP drawable);
     void addAnimation(AnimationSP animation) { _animations.push_back(animation); }
 
   protected:
@@ -47,6 +48,8 @@ class Screen : public sf::Drawable,
 
     bool _finish {false};
 };
+
+using ScreenSP = std::shared_ptr<Screen>;
 
 }
 

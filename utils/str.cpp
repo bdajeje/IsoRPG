@@ -18,4 +18,14 @@ std::string consumeUntil(std::string& input, const std::string& until, bool jump
   return result;
 }
 
+std::string readableMoney(uint money)
+{
+  std::string result = std::to_string(money);
+
+  for(int i = result.length() - 3; i > 0; i -= 3)
+    result.insert(i, ".");
+
+  return result;
+}
+
 }

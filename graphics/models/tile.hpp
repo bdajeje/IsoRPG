@@ -3,13 +3,11 @@
 
 #include <SFML/Graphics.hpp>
 #include "graphics/drawable.hpp"
-#include "game/transformable.hpp"
 #include "graphics/sprite.hpp"
 
 namespace graphics {
 
-class Tile : public Drawable
-           , public game::Transformable
+class Tile : public Drawable           
 {
   public:
 
@@ -22,22 +20,26 @@ class Tile : public Drawable
     void select();
     void unselect();
 
-    void hover();
+    void hover(bool force = false);
     void unhover();
 
     void setMovementAllowed(bool value);
-    void setHighlighted();
+    void setHighlighted(const sf::Color& color = sf::Color{255, 255, 255, 100}, int delay = 0);
+    void unHighlight();
     void resetLines();
     void resetFillColor();
+    bool isHighlighted() const noexcept { return _highlighted; }
 
     void setBlocking(bool value) { _blocking = value; }
 
     sf::FloatRect getGlobalBounds() const { return _sprite->getGlobalBounds(); }
-    const sf::Vector2f& getPosition() const override { return _point_1; }
+    virtual const sf::Vector2f& getPosition() const override { return _point_1; }
 
     std::shared_ptr<sf::ConvexShape>& shape() noexcept { return _shape; }
     bool blocking() const { return _blocking; }
     void toggleShowGrid() noexcept;
+    void showGrid() noexcept { _show_grid = true; }
+    void hideGrid() noexcept { _show_grid = false; }
 
     virtual void update(const sf::Time& time) override;
 
@@ -57,6 +59,7 @@ class Tile : public Drawable
     sf::Color _fill_color;
     bool _blocking;
     bool _show_grid {false};
+    bool _highlighted {false};
 };
 
 using ShapeSP = std::shared_ptr<sf::Shape>;

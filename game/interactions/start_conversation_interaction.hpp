@@ -13,6 +13,7 @@ class StartConversationInteraction final : public Interaction
 
     virtual void exec() override;
     virtual json save() override;
+    virtual void mouseHover() override;
 };
 
 }

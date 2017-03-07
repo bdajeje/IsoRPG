@@ -10,7 +10,7 @@ class Mouse final : public sf::Drawable
   public:
 
     enum class Status {
-      Normal, Hover, StartConversation, ChangeMap
+      Normal, Hover, StartConversation, ChangeMap, Loot
     };
 
     static void init();

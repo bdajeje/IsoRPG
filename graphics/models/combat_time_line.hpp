@@ -2,8 +2,8 @@
 #define COMBATTIMELINE_HPP
 
 #include "graphics/drawable.hpp"
-#include "game/transformable.hpp"
 #include "game/models/character.hpp"
+#include "game/models/combat_model.hpp"
 
 namespace graphics {
 
@@ -19,14 +19,12 @@ struct CombatTimeLineFace
 };
 
 class CombatTimeLine final : public Drawable
-                           , public game::Transformable
 {
   public:
 
-    CombatTimeLine(const sf::Vector2f& pos, const std::list<game::CharacterSP>& characters);
+    CombatTimeLine(const sf::Vector2f& pos, const game::CombatModelSP& model);
 
-    void setPosition(float x, float y) override;
-    void setPosition(const sf::Vector2f& position) override { setPosition(position.x, position.y); }    
+    virtual void setPosition(float x, float y) override;
 
     virtual sf::FloatRect getGlobalBounds() const override;
     virtual void update(const sf::Time& time) override;
@@ -37,13 +35,16 @@ class CombatTimeLine final : public Drawable
   protected:
 
     virtual void internalDraw(sf::RenderTarget& target, sf::RenderStates states) const noexcept;
-    void setCharacters(const std::list<game::CharacterSP>& characters);
+    void setCharacters();
+    void setPointerPos(size_t index);
 
   private:
 
-    std::list<game::CharacterSP> _characters;
+    SpriteSP _background;
+    std::vector<SpriteSP> _pointers;
     std::list<CombatTimeLineFace> _faces;
     sf::Vector2f _pos;
+    game::CombatModelSP _model;
 };
 
 using CombatTimeLineSP = std::shared_ptr<CombatTimeLine>;

@@ -16,16 +16,33 @@ FillBar::FillBar(uint value, uint max_value, const sf::Color& fill_color, const 
   _outer_rect->shape()->setOutlineThickness(1);
   _outer_rect->shape()->setFillColor(sf::Color{0, 0, 0, 0});
 
+  if(width <= 0)
+    width = 0;
+
+  if(height <= 0)
+    height = 0;
+
   _outer_rect->shape()->setSize({width, height});
 
   setValue(value);
 }
 
+void FillBar::setBackgroundColor(const sf::Color& color)
+{
+  _outer_rect->shape()->setFillColor(color);
+}
+
 void FillBar::setValue(uint value)
 {
   _value = value;
-  _inner_rect->shape()->setSize({_outer_rect->shape()->getGlobalBounds().width * value / 100,
+  _inner_rect->shape()->setSize({_outer_rect->shape()->getGlobalBounds().width * value / _max_value,
                                 _outer_rect->shape()->getGlobalBounds().height - 2});
+}
+
+void FillBar::setValues(uint value, uint max_value)
+{
+  _max_value = max_value;
+  setValue(value);
 }
 
 void FillBar::internalDraw(sf::RenderTarget& target, sf::RenderStates states) const noexcept

@@ -3,6 +3,7 @@
 
 #include <SFML/Window/Event.hpp>
 #include "utils/key_limitor.hpp"
+#include "utils/keybinding.h"
 
 namespace game {
 namespace events {
@@ -20,14 +21,17 @@ class Handler
 
     virtual ~Handler() = default;
 
-    virtual EventAction handleEvents(const sf::Event& event) = 0;
+    virtual EventAction handleEvents(const sf::Event& event) = 0;       
 
   protected:
 
-    static bool isKeyAllowed(sf::Keyboard::Key key, utils::KeyLimitor& limitor) noexcept;
+    static bool isKeyAllowed(sf::Keyboard::Key key) noexcept;
 };
 
 }
+
+using HandlerSP = std::shared_ptr<events::Handler>;
+
 }
 
 #endif // HANDLER_HPP

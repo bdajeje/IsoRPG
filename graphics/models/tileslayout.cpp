@@ -1,8 +1,6 @@
 #include "tileslayout.hpp"
 #include "managers/window.hpp"
 #include "utils/file.hpp"
-#include "graphics/animations/delay.hpp"
-#include "graphics/animations/fill_color.hpp"
 #include "game/models/characters_team.hpp"
 #include "game/models/map_pos.hpp"
 
@@ -30,11 +28,12 @@ namespace {
 }
 
 TilesLayout::TilesLayout(const json& data)
+  : _previous_hovered_map_pos {-1, -1}
 {
   createTiles(data["tiles"]);
   createInteractibles(data["interactibles"]);
 
-  _characters.push_back(game::CharactersTeam::currentCharacter());
+  _characters.push_back(game::CharactersTeam::instance()->currentCharacter());
 
 //  showTilesNumber();
 }
@@ -190,21 +189,23 @@ sf::Vector2f TilesLayout::tileToCartesian(size_t x, size_t y) const noexcept
            y * _tile_height };
 }
 
-TileSP TilesLayout::tileHovered(int x_pos, int y_pos)
+void TilesLayout::tileHovered(int pos_x, int pos_y, bool show_grid)
 {
-  TileSP tile = tileAtMousePos(x_pos, y_pos);
-  if(!tile)
-    return {};
+  tileHovered(mapPosFromMousePos(pos_x, pos_y), show_grid);
+}
 
-  if(tile == _previous_selected_tile)
-    return tile;
+void TilesLayout::tileHovered(const MapPos& map_pos, bool show_grid)
+{
+  if(map_pos == _previous_hovered_map_pos)
+    return;
 
-  if(_previous_hovered_tile)
+  TileSP previous_tile = tileAtMapPos(_previous_hovered_map_pos);
+  if(previous_tile)
   {
-    _previous_hovered_tile->unhover();
+    previous_tile->unhover();
 
     // Also unhover all interactions on that tile
-    auto interactibe_it = _interactibles.find(std::make_pair(x_pos, y_pos));
+    auto interactibe_it = _interactibles.find(std::make_pair(_previous_hovered_map_pos.x, _previous_hovered_map_pos.y));
     if(interactibe_it != _interactibles.end())
     {
       for(auto& interaction : interactibe_it->second->_interactions)
@@ -212,14 +213,14 @@ TileSP TilesLayout::tileHovered(int x_pos, int y_pos)
     }
   }
 
-  triggerTileHovered(mapPosFromMousePos(x_pos, y_pos));
+  TileSP tile = tileAtMapPos(map_pos);
+  if(tile)
+  {
+    tile->hover(show_grid);
+    triggerTileHovered(map_pos);
+  }
 
-  _previous_hovered_tile = tile;
-
-  if(!tile->blocking())
-    tile->hover();
-
-  return tile;
+  _previous_hovered_map_pos = map_pos;
 }
 
 TileSP TilesLayout::tileClicked(const MapPos& map_pos)
@@ -232,7 +233,6 @@ TileSP TilesLayout::tileClicked(const MapPos& map_pos)
     _previous_selected_tile->unselect();
 
   _previous_selected_tile = tile;
-  tile->select();
 
   return tile;
 }
@@ -334,6 +334,11 @@ Path TilesLayout::findPath(const MapPos& start, const MapPos& dest) const
   return {};
 }
 
+bool TilesLayout::isWalkable(int x, int y) const
+{
+  return isWalkable(mapPosFromMousePos(x, y));
+}
+
 bool TilesLayout::isWalkable(const MapPos& dest) const
 {
   return _walkables[dest.y][dest.x];
@@ -355,7 +360,6 @@ Path TilesLayout::pathFinding(const MapPos& start, const MapPos& dest)
     _walkables[dest.y][dest.x] = true;
 
   Path path = findPath(start, dest);
-  enlightPath(path);
 
   if(path_to_interactible)
     _walkables[dest.y][dest.x] = false;
@@ -390,32 +394,30 @@ std::vector<MapPos> TilesLayout::findNeighours(std::vector<std::vector<bool>>& v
   return valid_neighbours_points;
 }
 
-void TilesLayout::enlightPath(const Path& path)
+void TilesLayout::enlightPath(const Path& path, int show_limit)
 {
-  // Finish previous animations
-  for(AnimationSP& animation : _enlighted_tile_animations)
-    animation->finish();
+  _player_path = path;
 
   unEnlightedTiles();
   _enlighted_tiles.clear();
-  _enlighted_tile_animations.clear();
 
   // Create new animations
   int delay {0};
-  for(const MapPos& map_pos: path)
+  int index = 0;
+  for(const MapPos& map_pos : path)
   {
     TileSP tile = tileAtMapPos(map_pos);
     if(tile)
     {
-      std::shared_ptr<sf::Shape> shape = tile->shape();
-      AnimationSP enlight_animation = std::make_shared<animations::FillColor>(shape, sf::Color{255, 255, 255, 100}, sf::milliseconds(300));
-      auto delay_animation = std::make_shared<animations::Delay>(enlight_animation, sf::milliseconds(delay));
+      tile->cancelAnimations();
+
+      const sf::Color color = (show_limit >= 0 && index < show_limit) ? sf::Color{255, 255, 255, 100} : sf::Color{150, 0, 0, 100};
+      tile->setHighlighted(color, delay);
       _enlighted_tiles.push_back(tile);
-      _animations.push_back(delay_animation);
-      _enlighted_tile_animations.push_back(enlight_animation);
     }
 
-    delay += 5;
+    delay += 50;
+    index++;
   }
 }
 
@@ -434,25 +436,14 @@ void TilesLayout::update(const sf::Time& elapsed_time)
   // Update interactibles
   for(const auto& interactible : _interactibles)
     interactible.second->_drawable->update(elapsed_time);
-
-  // Update animations
-  for(AnimationSP& animation : _animations)
-    animation->update(elapsed_time);
-
-  // Removed finished animations
-  _animations.erase(std::remove_if(_animations.begin(), _animations.end(), [](const AnimationSP& animation){
-    return animation->isFinished();
-  }), _animations.end());
 }
 
 void TilesLayout::unEnlightedTiles()
 {
   for(const TileSP& tile: _enlighted_tiles)
-  {
-    std::shared_ptr<sf::Shape> shape = tile->shape();
-    AnimationSP animation = std::make_shared<animations::FillColor>(shape, sf::Color{255, 255, 255, 0}, sf::milliseconds(100));
-    _animations.push_back(animation);
-  }
+    tile->unHighlight();
+
+  _enlighted_tiles.clear();
 }
 
 void TilesLayout::toggleShowGrid() noexcept
@@ -500,6 +491,7 @@ json TilesLayout::save()
 
 void TilesLayout::startCombat(game::CombatModelSP& model)
 {
+  _player_path.clear();
   _characters.clear();
   _combat_model = model;
 
@@ -512,8 +504,13 @@ void TilesLayout::startCombat(game::CombatModelSP& model)
   }
 
   // Add combat interactibles (ennemies...)
+  auto current_character_pos = model->currentCharacter()->mapPos();
   for(auto& ennemy : model->ennemies())
+  {
+    // Set ennemy direction points to player
+    ennemy->setDirection(current_character_pos);
     addEnnemy(ennemy);  
+  }
 }
 
 void TilesLayout::addEnnemy(game::EnnemyCharacterSP& ennemy)
@@ -552,6 +549,51 @@ sf::FloatRect TilesLayout::getGlobalBounds() const
 {
   const auto window_size = mgr::Window::instance()->getSize();
   return {0, 0, window_size.x, window_size.y};
+}
+
+size_t TilesLayout::pathContains(const graphics::Path& path, const MapPos& map_pos)
+{
+  size_t i = 0;
+  for(const auto& path_pos : path)
+  {
+    i++;
+
+    if(path_pos == map_pos)
+      return i;
+  }
+
+  return 0;
+}
+
+void TilesLayout::enlightTile(const MapPos& map_pos)
+{
+  auto tile = tileAtMapPos(map_pos);
+  if(tile && !tile->isHighlighted())
+  {
+    tile->setHighlighted();
+    _enlighted_tiles.push_back(tile);
+  }
+}
+
+void TilesLayout::showSkillArea(const game::CombatSkillSP& skill, const MapPos& map_pos)
+{
+  if(_shown_skill.skill == skill && _shown_skill.map_pos == map_pos)
+    return;
+
+  _shown_skill.skill = skill;
+  _shown_skill.map_pos = map_pos;
+
+  unEnlightedTiles();
+
+  const auto affected_map_pos = skill->area()->affectedMapPos(map_pos);
+  for(const auto& pos : affected_map_pos)
+    enlightTile(pos);
+}
+
+void TilesLayout::hideSkillArea()
+{
+  unEnlightedTiles();
+  _shown_skill.skill.reset();
 }
 
 }

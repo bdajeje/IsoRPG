@@ -33,17 +33,16 @@ const sf::Texture& TextureManager::get(const std::string& texture_file_path)
   return instance.loadTexture(texture_file_path);
 }
 
-const sf::Texture& TextureManager::get(const std::string& texture_file_path, const sf::IntRect& rect)
-{
-  // \todo rect textures are not cached !
+//const sf::Texture& TextureManager::get(const std::string& texture_file_path, const sf::IntRect& rect)
+//{
+//  // \todo rect textures are not cached !
 
-  sf::Texture texture;
-  if( !texture.loadFromFile( TextureManager::instance()._directory + texture_file_path, rect ) )
-    throw std::invalid_argument {"Can't load rect texture: " + texture_file_path};
+//  sf::Texture texture;
+//  if( !texture.loadFromFile( TextureManager::instance()._directory + texture_file_path, rect ) )
+//    throw std::invalid_argument {"Can't load rect texture: " + texture_file_path};
 
-  return texture;
-}
-
+//  return texture;
+//}
 
 const sf::Texture& TextureManager::loadTexture(const std::string& texture_file_path)
 {

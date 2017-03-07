@@ -5,6 +5,9 @@
 
 #include "utils/file.hpp"
 #include "utils/json.hpp"
+#include "graphics/animations/fill_color.hpp"
+#include "graphics/animations/delay.hpp"
+#include "graphics/animations/animated_sprite.hpp"
 
 namespace graphics {
 
@@ -63,21 +66,49 @@ void Tile::unselect()
   resetLines();
 }
 
-void Tile::hover()
+void Tile::hover(bool force)
 {
-  updateShape(sf::Color{0, 0, 0, 0}, sf::Color{0, 255, 0}, 2);
+  _shape->setOutlineThickness(2);
+  _shape->setOutlineColor(sf::Color{0, 255, 0});
+
+  if(force)
+    _show_grid = true;
 }
 
 void Tile::unhover()
 {
-  updateShape(sf::Color{0, 0, 0, 0}, sf::Color{100, 100, 100, 150}, 1);
-  _show_grid = false;
+  _shape->setOutlineThickness(1);
+  _shape->setOutlineColor(sf::Color{100, 100, 100, 150});
+
+  if(!_highlighted)
+    _show_grid = false;
 }
 
-void Tile::setHighlighted()
+void Tile::setHighlighted(const sf::Color& color, int delay)
 {
-  _shape->setFillColor(sf::Color{255, 255, 255, 150});
+  cancelAnimations();
+  AnimationSP enlight_animation = std::make_shared<animations::FillColor>(_shape, color, sf::milliseconds(400));
+
+  if(delay > 0)
+    addAnimation(std::make_shared<animations::Delay>(enlight_animation, sf::milliseconds(delay)));
+  else
+    addAnimation(enlight_animation);
+
+  _highlighted = true;
   _show_grid = true;
+}
+
+void Tile::unHighlight(/*bool animate*/)
+{
+  const sf::Color color(255, 255, 255, 0);
+
+//  if(animate)
+  cancelAnimations();
+    addAnimation(std::make_shared<animations::FillColor>(_shape, color, sf::milliseconds(100)));
+//  else
+//    _shape->setFillColor(color);
+
+  _highlighted = false;
 }
 
 void Tile::setMovementAllowed(bool value)
@@ -113,6 +144,7 @@ void Tile::toggleShowGrid() noexcept
 
 void Tile::update(const sf::Time& time)
 {
+  Drawable::update(time);
   _sprite->update(time);
 }
 

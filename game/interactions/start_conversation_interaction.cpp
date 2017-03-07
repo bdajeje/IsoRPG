@@ -1,6 +1,7 @@
 #include "start_conversation_interaction.hpp"
 #include "game/game.hpp"
 #include "game/screens/conversation_screen.hpp"
+#include "graphics/mouse.hpp"
 
 namespace game {
 
@@ -17,6 +18,11 @@ void StartConversationInteraction::exec()
 json StartConversationInteraction::save()
 {
   return _data;
+}
+
+void StartConversationInteraction::mouseHover()
+{
+  graphics::Mouse::setStatus(graphics::Mouse::Status::StartConversation);
 }
 
 }

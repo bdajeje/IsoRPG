@@ -5,7 +5,7 @@
 
 namespace utils {
 
-int random(int min, int max)
+static int random(int min, int max)
 {
   if(min == max)
     return min;

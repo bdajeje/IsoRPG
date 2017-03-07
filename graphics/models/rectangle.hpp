@@ -3,16 +3,15 @@
 
 #include <SFML/Graphics.hpp>
 #include "graphics/drawable.hpp"
-#include "game/transformable.hpp"
 
 namespace graphics {
 
 class Rectangle : public Drawable
-                , public game::Transformable
 {
   public:
 
     Rectangle();
+    Rectangle(float width, float height, const sf::Color& color = sf::Color::Black);
 
     sf::FloatRect getGlobalBounds() const { return _shape->getGlobalBounds(); }
     std::shared_ptr<sf::RectangleShape>& shape() noexcept { return _shape; }

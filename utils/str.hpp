@@ -6,6 +6,7 @@
 namespace utils {
 
 std::string consumeUntil(std::string& input, const std::string& until, bool jump_until);
+std::string readableMoney(uint money);
 
 }
 

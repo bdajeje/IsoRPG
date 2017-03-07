@@ -29,6 +29,7 @@ class MultiLineContainer : public Drawable
     virtual void update(const sf::Time& elapsed_time);
 
     void setPosition(float x, float y) { _position.x = x; _position.y = y; }
+    const sf::Vector2f& getPosition() const noexcept { return _position; }
     void setString(const std::string& text);
 
     virtual void setColor(const sf::Color& /*color*/) override {}

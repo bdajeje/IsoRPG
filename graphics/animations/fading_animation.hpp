@@ -11,7 +11,9 @@ class FadingAnimation final : public Animation
 {
   public:
 
-    FadingAnimation(DrawableSP drawable, const sf::Time& time, bool start = true);
+    enum class Type { In, Out };
+
+    FadingAnimation(DrawableSP drawable, const sf::Time& time, Type type, bool start = true);
 
     virtual void update(const sf::Time& elapsed_time) override;
     void start() noexcept;
@@ -21,6 +23,7 @@ class FadingAnimation final : public Animation
     DrawableSP _drawable;
     const uint _time;
     uint _elapsed_time {0};
+    Type _type;
     bool _started;
 };
 

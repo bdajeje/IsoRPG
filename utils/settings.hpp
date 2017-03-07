@@ -38,7 +38,11 @@ class Settings final
      *  \param key   - key of the setting to change
      *  \param value - new value for the setting
      */
-    void set(const std::string& key, const std::string& value);
+    template <class T>
+    void set(const std::string& key, T value)
+    {
+      _setting_values[key] = std::to_string(value);
+    }
 
     /*! Save settings */
     bool save();

@@ -36,6 +36,7 @@ class ConversationScreen final : public InteractibleScreen
     void unFocusAnswer(int offset);
     size_t nbrAnswers() const { return _conversation.nbrAnswers(); }
     events::EventAction selectAnswer(size_t offset) noexcept;
+    events::EventAction clickAnswer(int x, int y);
 
   private:
 
@@ -44,9 +45,9 @@ class ConversationScreen final : public InteractibleScreen
     model::Conversation _conversation;
     bool _answers_shown {false};
     size_t _focused_answer {0};
-    utils::KeyLimitor _limitor;
     graphics::SpriteSP _bounce_sprite;
     graphics::SpriteSP _conversation_head;
+    graphics::TextSP _pnj_name;
 //    model::ConversationProgress _conversation_progress;
 };
 

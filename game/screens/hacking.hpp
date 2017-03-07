@@ -36,7 +36,6 @@
 //    const sf::Texture& _success_texture;
 //    std::map<const sf::Texture*, std::string> _texture_sounds;
 //    std::shared_ptr<graphics::animations::Move> _intro_animation;
-//    utils::KeyLimitor _limitor;
 //    std::vector<graphics::SpriteSP> _right_btns;
 //    std::vector<graphics::SpriteSP> _wrong_btns;
 //    graphics::SpriteSP _rotor;

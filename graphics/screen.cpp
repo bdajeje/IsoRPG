@@ -26,5 +26,9 @@ void Screen::draw(sf::RenderTarget& target, sf::RenderStates states) const
     drawable->draw(target, states);
 }
 
+void Screen::removeDrawable(DrawableSP drawable)
+{
+  std::remove_if(_drawables.begin(), _drawables.end(), [&](const DrawableSP& it) { return it == drawable; });
+}
 
 }

@@ -19,7 +19,6 @@
 //  : _neutral_texture {texture::TextureManager::get("hacking/empty_btn.png")}
 //  ,_error_texture {texture::TextureManager::get("hacking/wrong_btn.png")}
 //  ,_success_texture {texture::TextureManager::get("hacking/right_btn.png")}
-//  , _limitor {50}
 //  , _angle {utils::maths::random(0, 360)}
 //  , _target_proximity {30}
 //{

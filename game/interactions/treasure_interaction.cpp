@@ -4,6 +4,7 @@
 #include "game/game.hpp"
 #include "game/screens/treasure_screen.hpp"
 #include "graphics/animations/animated_sprite.hpp"
+#include "graphics/mouse.hpp"
 
 namespace game {
 
@@ -55,6 +56,11 @@ json TreasureInteraction::save()
 void TreasureInteraction::setItems(const std::vector<game::PortableItemSP>& items)
 {
   _model->setItems(items);
+}
+
+void TreasureInteraction::mouseHover()
+{
+  graphics::Mouse::setStatus(graphics::Mouse::Status::Loot);
 }
 
 }

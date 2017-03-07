@@ -1,21 +1,24 @@
 #include "button.hpp"
 #include "utils/graphics.hpp"
 #include "managers/texture_manager.hpp"
+#include "managers/font_manager.hpp"
 #include "graphics/mouse.hpp"
 
 namespace graphics {
 
-Button::Button(const std::string& text)
-  : _padding {20}
+Button::Button(const std::string& text, const graphics::TextProperties& text_props)
+  : _background_texture {&texture::TextureManager::get("button_background.png")}
+  , _background_texture_hover {&texture::TextureManager::get("button_background_hover.png")}
 {  
-  _background = getSprite("button_background.png", 1, 1);
   _text = getText("conversation.ttf", text, 20, sf::Color::Black);
-  resize();
-}
+  setTextProperties(text_props);
 
-void Button::resize()
-{
-  utils::graphics::resize(_background, _text->getGlobalBounds().width + _padding, _text->getGlobalBounds().height + _padding); // \todo +20 is a hack, don't know why sfml::Text::height is heigher than usual
+  auto bounds = _text->getGlobalBounds();
+  bounds.width += 60;
+  bounds.height += 15;
+  _background = std::make_shared<Sprite>(bounds.width, bounds.height);
+  _transformable = _background->sprite();
+  _background->setTexture(*_background_texture);
 }
 
 void Button::setPosition(float x, float y)
@@ -24,7 +27,7 @@ void Button::setPosition(float x, float y)
   auto bg_pos = _background->getPosition();
   auto bg_bounds = _background->getGlobalBounds();
   auto text_bounds = _text->getGlobalBounds();
-  _text->setPosition(bg_pos.x + (bg_bounds.width - text_bounds.width) / 2, bg_pos.y/* + _padding / 2*/);
+  _text->setPosition(bg_pos.x + (bg_bounds.width - text_bounds.width) / 2, bg_pos.y + (bg_bounds.height - text_bounds.height) / 2 - 9);
 }
 
 void Button::internalDraw(sf::RenderTarget& target, sf::RenderStates states) const noexcept
@@ -35,15 +38,13 @@ void Button::internalDraw(sf::RenderTarget& target, sf::RenderStates states) con
 
 void Button::hover()
 {
-  _background->setTexture( texture::TextureManager::get("button_background_hover.png") );
-  resize();
+  _background->setTexture(*_background_texture_hover);
   Mouse::setStatus(Mouse::Status::Hover);
 }
 
 void Button::unhover()
 {
-  _background->setTexture( texture::TextureManager::get("button_background.png") );
-  resize();
+  _background->setTexture(*_background_texture);
   Mouse::setStatus(Mouse::Status::Normal);
 }
 
@@ -55,8 +56,15 @@ sf::FloatRect Button::getGlobalBounds() const
 
 void Button::setColor(const sf::Color &color)
 {
-  _background->setColor(color);
+//  _background->setColor(color);
   _text->setColor(color);
+}
+
+void Button::setTextProperties(const graphics::TextProperties& text_props)
+{
+  _text->setColor(text_props.color);
+  _text->setFont(font::FontManager::get(text_props.font));
+  _text->setCharacterSize(text_props.size);
 }
 
 }

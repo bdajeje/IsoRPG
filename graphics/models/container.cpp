@@ -1,45 +1,71 @@
 #include "container.hpp"
-#include "managers/texture_manager.hpp"
+#include "utils/graphics.hpp"
 
 namespace graphics {
-namespace model {
 
-Container::Container(sf::Vector2f size_percentage, sf::Vector2f position)
-{  
-  const float borders_width {20};
-  const float borders_height {20};
-
-  _sprites[TopLeft]     = graphics::getSprite("container_top_left", borders_width, borders_height);
-  _sprites[Top]         = graphics::getSprite("container_top", size_percentage.x, borders_height);
-  _sprites[TopRight]    = graphics::getSprite("container_top_right", borders_width, borders_height);
-  _sprites[Left]        = graphics::getSprite("container_left", borders_width, size_percentage.y);
-  _sprites[Right]       = graphics::getSprite("container_right", borders_width, size_percentage.y);
-  _sprites[BottomLeft]  = graphics::getSprite("container_bottom_left", borders_width, borders_height);
-  _sprites[Bottom]      = graphics::getSprite("container_bottom", borders_width, size_percentage.x);
-  _sprites[BottomRight] = graphics::getSprite("container_bottom_right", borders_width, borders_height);
-
-  setPosition(position);
-}
-
-void Container::draw(sf::RenderTarget& target, sf::RenderStates states) const
+Container::Container(int width, int height, const sf::Vector2f& pos, ContainerProps props)
+  : _width {width}
+  , _height {height}
 {
-  for(const SpriteSP& sprite : _sprites)
-    sprite->draw(target, states);
+//  if(default_background)
+//    setBackground(texture::TextureManager::get("container.png"));
+
+  _background = std::make_shared<Rectangle>(_width, _height, props.bg_color);
+  _background->setPosition(pos);
+  _transformable = _background->shape();
 }
 
-void Container::setPosition(const sf::Vector2f& position) noexcept
+void Container::internalDraw(sf::RenderTarget& target, sf::RenderStates states) const noexcept
 {
-  _sprites[TopLeft]->setPosition(position);
-  _sprites[Top]->setPosition(_sprites[TopLeft]->getPosition().x + _sprites[TopLeft]->getLocalBounds().width, position.y);
-  _sprites[TopRight]->setPosition(_sprites[Top]->getPosition().x + _sprites[Top]->getLocalBounds().width, position.y);
+  _background->draw(target, states);
 
-  _sprites[Left]->setPosition(position.x, position.y + _sprites[TopLeft]->getLocalBounds().height);
-  _sprites[Right]->setPosition(_sprites[TopRight]->getPosition().x, position.y + _sprites[TopRight]->getLocalBounds().height);
-
-  _sprites[BottomLeft]->setPosition(position.x, _sprites[Left]->getLocalBounds().height + _sprites[Left]->getLocalBounds().height);
-  _sprites[Bottom]->setPosition(_sprites[BottomLeft]->getPosition().x + _sprites[BottomLeft]->getLocalBounds().width, _sprites[Right]->getPosition().y + _sprites[Right]->getLocalBounds().height);
-  _sprites[BottomLeft]->setPosition(_sprites[Right]->getPosition().x, _sprites[Right]->getLocalBounds().height + _sprites[Right]->getLocalBounds().height);
+  for(const DrawableSP& drawable : _drawables)
+    drawable->draw(target, states);
 }
 
+void Container::addDrawable(DrawableSP drawable, const sf::Vector2f& pos)
+{
+  drawable->setPosition(getPosition() + pos);
+  _drawables.push_back(drawable);  
 }
+
+void Container::setPosition(float x, float y)
+{
+  auto pos = getPosition();
+  _background->setPosition(x, y);
+  moveElements(x - pos.x , y - pos.y);
+}
+
+void Container::move(float x, float y)
+{
+  _background->move(x, y);
+
+  for(auto& drawable : _drawables)
+    drawable->move(x, y);
+}
+
+void Container::moveElements(float x, float y)
+{
+  for(auto& drawable : _drawables)
+    drawable->move(x, y);
+}
+
+void Container::clicked(int x, int y)
+{
+  for(const DrawableSP& drawable : _drawables)
+  {
+    if(drawable->isVisible() && drawable->getGlobalBounds().contains(x, y))
+    {
+      drawable->clicked(x, y);
+      return;
+    }
+  }
+}
+
+//void Container::setBackground(/*const sf::Texture& texture*/)
+//{
+////  _background = getSprite(texture, _width, _height);
+//  _background = std::make_shared<Rectangle>(_width, _height);
+//}
+
 }

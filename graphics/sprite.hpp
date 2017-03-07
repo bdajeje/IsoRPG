@@ -6,21 +6,19 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "graphics/drawable.hpp"
-#include "game/transformable.hpp"
-#include "graphics/animations/animated_sprite.hpp"
 
 namespace graphics {
 
 class Sprite final : public Drawable
-                   , public game::Transformable
 {
   public:
 
     Sprite(float width, float height);
 
-    sf::FloatRect getGlobalBounds() const { return _sprite->getGlobalBounds(); }    
+    sf::FloatRect getGlobalBounds() const { return _sprite->getGlobalBounds(); }
     sf::FloatRect getLocalBounds() const { return _sprite->getLocalBounds(); }
     const sf::Texture* getTexture() const { return _sprite->getTexture(); }
+    const sf::IntRect& getTextureRect() const { return _sprite->getTextureRect(); }
     virtual const sf::Color getColor() const override { return _sprite->getColor(); }
 
     /*! Replace sprite current texture
@@ -28,10 +26,14 @@ class Sprite final : public Drawable
      *  \param width - ovewrite scaling with given value
      *  \param height - ovewrite scaling with given value
      */
-    void setTexture(const sf::Texture& texture, bool keep_size = true);
+    void setTexture(const sf::Texture& texture, bool resetRect = false);
     void setTextureRect(const sf::IntRect& rectangle);
 
     virtual void setColor(const sf::Color& color) override { _sprite->setColor(color); }
+    void verticalFlip();
+    void horizontalFlip();
+
+    std::shared_ptr<sf::Sprite> sprite() { return _sprite; }
 
   protected:
 

@@ -2,6 +2,7 @@
 #define GAMEMENU_HPP
 
 #include "game/interactible_screen.hpp"
+#include "graphics/models/menu.hpp"
 
 namespace game {
 namespace screen {
@@ -17,7 +18,7 @@ class GameMenu final : public InteractibleScreen
 
   private:
 
-    utils::KeyLimitor _limitor;
+    graphics::MenuSP _menu;
 };
 
 }

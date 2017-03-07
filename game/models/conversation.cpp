@@ -10,83 +10,25 @@
 namespace game {
 namespace model {
 
-namespace {
-
-  AnswerAction createAnswerAction(const std::string& input) noexcept
-  {
-    AnswerAction action;
-
-    if(input.size() < 3)
-      return action;
-
-    action.data = input.substr(2);
-
-    // Continue conversation to selected step
-    if(input.front() == 'c')
-      action.type = AnswerActionType::GotoConversationStep;
-    // Run script
-    else if(input.front() == 's')
-      action.type = AnswerActionType::RunScript;
-    // Defined action
-    else if(input.front() == 'a')
-    {
-      action.type = AnswerActionType::QuitConversation;
-    }
-
-    return action;
-  }
-
-}
-
-namespace {
-  typedef const std::vector<std::string> Lines;
-  typedef std::vector<std::string>::const_iterator Lines_cit;
-
-  void setConversationStepText(ConversationStepSP& step, Lines_cit& it)
-  {
-    const std::string line = *it;
-    std::vector<std::string> parts;
-    parts.reserve(2);
-    boost::algorithm::split(parts, line, boost::is_any_of("|"));
-    if(parts.size() != 2)
-      throw utils::Exception("Wrong conversation step line: " + line);
-
-    step->text = parts[0];
-    step->sprite_path = parts[1];
-    ++it;
-  }
-
-  void setConversationStepAnswers(ConversationStepSP& step, Lines_cit& it)
-  {
-    uint nbr_answers = std::stoul(*it);
-    do {
-      ++it;
-      nbr_answers--;
-      const std::string line = *it;
-      std::vector<std::string> parts;
-      parts.reserve(2);
-      boost::algorithm::split(parts, line, boost::is_any_of("|"));
-      if(parts.size() != 2)
-        throw utils::Exception("Wrong conversation answer: " + line);
-      step->answers.emplace_back(parts[0]);
-      step->answers_action.emplace_back(createAnswerAction(parts[1]));
-    }
-    while(nbr_answers > 0);
-  }
-}
-
-Conversation::Conversation(const std::string& conversation_filepath)
+ConversationStep::ConversationStep(const json& data)
 {
-  Lines lines = utils::files::lines("./resources/conversations/" + conversation_filepath);
-  Lines_cit it = lines.begin();
-  Lines_cit end = lines.end();
-  while(it != end && !(*it).empty())
+  text = data["text"];
+  sprite_path = data["head_sprite"];
+
+  for(const auto& answer : data["answers"])
   {
-    ConversationStepSP step = std::make_shared<ConversationStep>();
-    setConversationStepText(step, it);
-    setConversationStepAnswers(step, it);    
+    answers.push_back(answer["text"]);
+    answers_action.emplace_back(answer["action"]["type"], answer["action"]["value"]);
+  }
+}
+
+Conversation::Conversation(const json& data)
+{
+  const auto& conversation_data = data["conversation"];
+  for(const auto& text : conversation_data["texts"])
+  {
+    ConversationStepSP step = std::make_shared<ConversationStep>(text);
     _steps.push_back(step);
-    ++it;
   }
 
   _current = _steps.front();
@@ -113,7 +55,7 @@ const std::string& Conversation::answer(size_t offset) const noexcept
   if(offset >= _current->answers.size())
     return EMPTYSTR;
 
-   return _current->answers.at(offset).text;
+   return _current->answers.at(offset);
 }
 
 }

@@ -13,6 +13,9 @@ class InteractibleScreen : public graphics::Screen,
 {
   struct HoverFuncs
   {
+    HoverFuncs()
+    {}
+
     HoverFuncs(std::function<void()> focus, std::function<void()> unfocus)
       : _focus {focus}
       , _unfocus {unfocus}
@@ -35,14 +38,18 @@ class InteractibleScreen : public graphics::Screen,
   protected:
 
     void addClickable(graphics::DrawableSP clickable, std::function<void()> func);
+    void addHoverable(graphics::DrawableSP hoverable);
     void addHoverable(graphics::DrawableSP hoverable, std::function<void()> focus, std::function<void()> unfocus);
-    graphics::DrawableSP hovered(int x, int y) const noexcept;
+    void addEventHandler(HandlerSP handler) { _event_handlers.push_back(handler); }
+    bool hovered(int x, int y) noexcept;
     bool clicked(int x, int y) const noexcept;
+    void unhoverCurrent();
 
   private:
 
     std::map<graphics::DrawableSP, std::function<void()>> _clickables;
     std::map<graphics::DrawableSP, HoverFuncs> _hoverables;
+    std::vector<HandlerSP> _event_handlers;
     graphics::DrawableSP _current_hover;
 };
 

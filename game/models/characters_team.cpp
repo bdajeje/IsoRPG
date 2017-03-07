@@ -6,24 +6,26 @@ namespace game {
 
 std::shared_ptr<CharactersTeam> CharactersTeam::_instance;
 
-void CharactersTeam::init()
+void CharactersTeam::init(const std::string& save_name)
 {
-  _instance.reset(new CharactersTeam);
+  _instance.reset(new CharactersTeam(save_name));
 }
 
-CharactersTeam::CharactersTeam()
+CharactersTeam::CharactersTeam(const std::string& save_name)
 {
-  _characters.push_back(std::make_shared<PlayableCharacter>(
-                          json::parse(utils::files::read("./resources/progression/jade.json"))));
-  _characters.push_back(std::make_shared<PlayableCharacter>(
-                          json::parse(utils::files::read("./resources/progression/jeje.json"))));
-  _characters.push_back(std::make_shared<PlayableCharacter>(
-                          json::parse(utils::files::read("./resources/progression/arthy.json"))));
+  const std::string path = "./resources/saves/" + save_name + "/";
+  const json data = json::parse(utils::files::read(path + "character_team.json"));
+
+  for(const std::string& character_name : data["characters"])
+  {
+    _characters.push_back(std::make_shared<PlayableCharacter>(
+                            json::parse(utils::files::read(path + "characters/" + character_name + ".json"))));
+  }
 
   _current_map_character = _characters.front();
-  _current_map_character->setMapPos(MapPos{10, 18});
+  _current_map_character->setMapPos(MapPos{data["map"]["pos"][0], data["map"]["pos"][1]});
 
-  _money = 9923;
+  _money = data["money"];
 }
 
 PlayableCharacterSP CharactersTeam::character(size_t offset) noexcept
@@ -40,6 +42,11 @@ json CharactersTeam::save()
 
   for(const auto& character : _characters)
     data["characters"].push_back(character->name());
+
+  data["money"] = _money;
+  data["map"]["name"] = "todo";
+  data["map"]["pos"][0] = 10; // todo
+  data["map"]["pos"][1] = 18; // todo
 
   return data;
 }

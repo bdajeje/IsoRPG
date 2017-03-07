@@ -71,9 +71,4 @@ bool Settings::save()
   return files::create(_filepath, result, true);
 }
 
-void Settings::set(const std::string& key, const std::string& value)
-{
-  _setting_values[key] = value;
-}
-
 }

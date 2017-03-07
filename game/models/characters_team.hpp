@@ -16,19 +16,20 @@ class CharactersTeam final : public utils::Serializable
 
     static constexpr size_t MaxNbrCharacters {4};
 
-    static void init();
+    /* Use static inist method to instanciate the singleton (for the game)
+     * Use the constructor to get a temporary objects (usefull to get info on a saved game)
+     */
+    static void init(const std::string& save_name);
+    CharactersTeam(const std::string& save_name);
+
     static std::shared_ptr<CharactersTeam> instance() { return _instance; }
-    static uint money() { return _instance->_money; }
-    static size_t nbrCharacters() { return _instance->_characters.size(); }    
-    static PlayableCharacterSP character(size_t offset) noexcept;
-    static PlayableCharacterSP& currentCharacter() { return _instance->_current_map_character; }
-    static std::vector<PlayableCharacterSP>& characters() { return _instance->_characters; }
+    uint money() { return _money; }
+    size_t nbrCharacters() { return _characters.size(); }
+    PlayableCharacterSP character(size_t offset) noexcept;
+    PlayableCharacterSP& currentCharacter() { return _current_map_character; }
+    std::vector<PlayableCharacterSP>& characters() { return _characters; }
 
     json save() override;
-
-  private:
-
-    CharactersTeam();
 
   private:
 

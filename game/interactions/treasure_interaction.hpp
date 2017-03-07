@@ -5,6 +5,7 @@
 #include "game/models/portable_item.hpp"
 #include "game/models/inventory_model.hpp"
 #include "graphics/sprite.hpp"
+#include "graphics/animations/animated_sprite.hpp"
 
 namespace game {
 
@@ -17,6 +18,7 @@ class TreasureInteraction final : public Interaction
 
     virtual void exec() override;
     virtual json save() override;
+    virtual void mouseHover() override;
 
     void setItems(const std::vector<PortableItemSP>& items);
 

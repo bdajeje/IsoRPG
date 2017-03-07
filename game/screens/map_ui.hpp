@@ -31,8 +31,7 @@ class MapUI final : public InteractibleScreen
 
     std::string _id;
     graphics::TextSP _map_name;
-    EquipmentScreenSP _equipment_page;
-    utils::KeyLimitor _limitor;
+    EquipmentScreenSP _equipment_page;    
 };
 
 }
